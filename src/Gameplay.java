@@ -8,7 +8,7 @@ public class Gameplay {
         Random rnd = new Random(originalWords.length);
         System.out.println("-------------------------------------");
         System.out.println("You can write 'STOP' to stop the game");
-        System.out.println("You can write 'add word' to add a new word to dictionary");
+        System.out.println("You can write 'add words' to add a new word to dictionary");
         while (true){
             int random_word = rnd.nextInt(originalWords.length);
             System.out.println("-------------------------------------");
@@ -18,7 +18,7 @@ public class Gameplay {
             if (userGuess.equals("stop")) {
                 break;
             }
-            else if (userGuess.equals("add word")) {
+            else if (userGuess.contains("add word")) {
                 AddWords.addNewWords(path);
             }
             else{
