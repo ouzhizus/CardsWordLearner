@@ -14,10 +14,7 @@ public class Gameplay {
             System.out.println("Word: " + originalWords[random_word]);
             System.out.print("Translation: ");
             String userGuess = sc.nextLine().toLowerCase();
-            if(userGuess.equals(translatedWords[random_word])){
-                System.out.println("Great,you're right!");
-            }
-            else if (userGuess.equals("stop")) {
+            if (userGuess.equals("stop")) {
                 break;
             }
             else if (userGuess.equals("add word")) {
