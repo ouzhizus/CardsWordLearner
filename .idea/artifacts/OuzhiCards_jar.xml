@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="OuzhiCards:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/OuzhiCards_jar</output-path>
+    <root id="archive" name="OuzhiCards.jar">
+      <element id="module-output" name="OuzhiCards" />
+    </root>
+  </artifact>
+</component>

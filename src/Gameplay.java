@@ -1,13 +1,11 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.random.*;
-import java.util.Arrays;
+
 public class Gameplay {
     public static void wordsPlay(String[] originalWords,String[] translatedWords)
     {
         Scanner sc = new Scanner(System.in);
         Random rnd = new Random(originalWords.length);
-        String[] userDoesntKnow;
         System.out.println("You can write 'STOP' to stop the game");
         System.out.println("You can write 'add word' to add a new word to dictionary");
         while (true){
@@ -23,7 +21,7 @@ public class Gameplay {
                 break;
             }
             else if (userGuess.equals("add word")) {
-                AddWords.AddWords();
+                AddWords.addNewWords();
             }
             else{
                 System.out.println("Translation is: "+ translatedWords[random_word]);

@@ -1,14 +1,13 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
 public class AddWords{
-    public static void AddWords(){
+    public static void addNewWords(){
         Scanner sc = new Scanner(System.in);
         try{
-            FileWriter file = new FileWriter("input.txt",true);
+            FileWriter file = new FileWriter("C:\\Users\\ouzhi\\OneDrive\\Документы\\cardsLibrary\\input.txt",true);
             BufferedWriter writer = new BufferedWriter(file);
             while (true) {
                 System.out.print("Import a line to write: ");
