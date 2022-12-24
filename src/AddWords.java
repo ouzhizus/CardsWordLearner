@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class AddWords{
-    public static void addNewWords(){
+    public static void addNewWords(String path){
         Scanner sc = new Scanner(System.in,"Cp866");
         try{
             FileWriter file = new FileWriter
-                    ("C:\\Users\\ouzhi\\OneDrive\\Документы\\cardsLibrary\\input.txt",true);
+                    (path,true);
             BufferedWriter writer = new BufferedWriter(file);
             while (true) {
                 System.out.print("Import a line to write: ");

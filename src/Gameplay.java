@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Gameplay {
-    public static void wordsPlay(String[] originalWords,String[] translatedWords)
+    public static void wordsPlay(String[] originalWords,String[] translatedWords,String path)
     {
         Scanner sc = new Scanner(System.in);
         Random rnd = new Random(originalWords.length);
@@ -18,7 +18,7 @@ public class Gameplay {
                 break;
             }
             else if (userGuess.equals("add word")) {
-                AddWords.addNewWords();
+                AddWords.addNewWords(path);
             }
             else{
                 System.out.println("Translation is: "+ translatedWords[random_word]);
