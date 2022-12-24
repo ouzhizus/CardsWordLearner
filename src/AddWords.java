@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class AddWords{
     public static void addNewWords(){
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in,"Cp866");
         try{
             FileWriter file = new FileWriter
                     ("C:\\Users\\ouzhi\\OneDrive\\Документы\\cardsLibrary\\input.txt",true);
