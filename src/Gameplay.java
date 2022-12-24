@@ -6,6 +6,7 @@ public class Gameplay {
     {
         Scanner sc = new Scanner(System.in);
         Random rnd = new Random(originalWords.length);
+        System.out.println("-------------------------------------");
         System.out.println("You can write 'STOP' to stop the game");
         System.out.println("You can write 'add word' to add a new word to dictionary");
         while (true){
