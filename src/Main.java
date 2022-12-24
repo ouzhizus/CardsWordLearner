@@ -6,7 +6,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String os = System.getProperty("os.name").toLowerCase();
         String userName = System.getProperty("user.name");
-        String path;
+        String path = "";
         String mkdirPath;
         if(os.contains("windows")) {
             path = "C:\\Users\\" + userName + "\\OneDrive\\Документы\\cardsLibrary\\input.txt";
@@ -30,24 +30,28 @@ public class Main {
                     System.out.println("File 'input.txt' was created at " + path);
                 }
             }
-            int arrayLength = 0;
-            String line;
-            try {
-                BufferedReader reader = new BufferedReader
-                        (new FileReader(path));
-                while ((reader.readLine()) != null) {
-                    arrayLength++;
-                }
-                if (arrayLength == 0) {
-                    System.out.println("File is empty");
-                    AddWords.addNewWords(path);
-                }
-                reader.close();
-                BufferedReader reader2 = new BufferedReader
-                        (new FileReader(path));
-                String[] originalWords = new String[arrayLength];
-                String[] translatedWords = new String[arrayLength];
-                int i = 0;
+        }
+        int arrayLength = 0;
+        String line;
+        try {
+            BufferedReader reader = new BufferedReader
+                    (new FileReader(path));
+            while ((reader.readLine()) != null) {
+                arrayLength++;
+            }
+            if (arrayLength == 0) {
+                System.out.println("File is empty");
+                AddWords.addNewWords(path);
+                System.out.println("-------------------------------------");
+                System.out.println("Please,restart the application");
+            }
+            reader.close();
+            BufferedReader reader2 = new BufferedReader
+                    (new FileReader(path));
+            String[] originalWords = new String[arrayLength];
+            String[] translatedWords = new String[arrayLength];
+            int i = 0;
+            if(arrayLength != 0){
                 while ((line = reader2.readLine()) != null) {
                     String[] words = line.split(" ");
                     originalWords[i] = words[0]; //adds a first word of line
@@ -55,9 +59,9 @@ public class Main {
                     i++;
                 }
                 Gameplay.wordsPlay(originalWords, translatedWords, path);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

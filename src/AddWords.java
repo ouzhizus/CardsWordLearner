@@ -11,6 +11,7 @@ public class AddWords{
                     (path,true);
             BufferedWriter writer = new BufferedWriter(file);
             while (true) {
+                System.out.println("-------------------------------------");
                 System.out.print("Import a line to write: ");
                 String userInput = sc.nextLine().toLowerCase();
                 if(userInput.equals("stop")){
