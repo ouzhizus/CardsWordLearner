@@ -19,7 +19,7 @@ public class Main {
                     System.out.println("File 'input.txt' was created at " + path);
                 }
             }
-        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
+        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix") || os.contains("untu")) {
             path = "~\\Documents\\" + userName + "cardsLibrary\\input.txt";
             mkdirPath = path.replace("\\input.txt", "");
             File f = new File(path);
