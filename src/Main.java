@@ -1,9 +1,7 @@
 import java.io.*;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
         String os = System.getProperty("os.name").toLowerCase();
         String userName = System.getProperty("user.name");
         String path = "";
