@@ -9,25 +9,25 @@ public class Main {
         String userName = System.getProperty("user.name");
         String path = "";
         String mkdirPath = "";
-        String userFileName = "";
+        String userFileName = "dfksfdk";
         String checkPath = "";
         if(os.contains("windows")) {
-            checkPath = "C:\\Users\\" + userName + "\\OneDrive\\Documents\\cardsLibrary";
+            checkPath = "C:\\Users\\" + userName + "\\OneDrive\\Документы\\cardsLibrary";
             if(!Files.exists(Path.of(checkPath))){
                 System.out.println("Folder doesn't exist");
             }
-            path = "C:\\Users\\" + userName + "\\OneDrive\\Documents\\cardsLibrary\\inpu.txt";
-            mkdirPath = path.replace("\\inpu.txt", "");
+            path = "C:\\Users\\" + userName + "\\OneDrive\\Документы\\cardsLibrary\\"+userFileName+".txt";
+            mkdirPath = "C:\\Users\\"+userName +"\\OneDrive\\Документы\\cardsLibrary";
             File f = new File(path);
             File mkdir = new File(mkdirPath);
             if (mkdir.mkdirs()) {
                 System.out.println("Folder 'cardsLibrary' was created");
                 if (f.createNewFile()) {
-                    System.out.println("File 'input.txt' was created at " + path);
+                    System.out.println("File "+userFileName+" was created at " + path);
                 }
             }
             else if (f.createNewFile()) {
-                System.out.println("File 'inpu.txt' was created at " + path);
+                System.out.println("File '"+userFileName+"' was created at " + path);
             }
             else{
                 File directoryPath = new File(mkdirPath);
