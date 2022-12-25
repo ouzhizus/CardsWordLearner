@@ -79,7 +79,7 @@ public class Main {
                 System.out.println("File is empty");
                 AddWords.addNewWords(path);
                 System.out.println("-------------------------------------");
-                System.out.println("Please,restart the application \t (click)");
+                System.out.println("Please,restart the application");
                 Thread.sleep(2000);
             }
             reader.close();
@@ -99,7 +99,7 @@ public class Main {
             }
         } catch (FileNotFoundException e) {
             System.out.println("-------------------------------------");
-            System.out.println("Please,restart the application \t (click)");
+            System.out.println("Please,restart the application");
             Thread.sleep(2000);
         }
     }
