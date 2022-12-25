@@ -12,11 +12,18 @@ public class Main {
         String PrePath = "";
         String path = "";
         String mkdirPath = "";
-        String userFileName = "dfksfdkk";
+        String userFileName = "";
         String checkPath = "";
         String chosenFile = "";
-        boolean fileWasCreated = false;
         if(os.contains("windows")) {
+            System.out.print("Do you want to create a new file? YES/NO \n --> ");
+            String userAnswer = sc.next().toLowerCase();
+            if(userAnswer.contains("yes")){
+                System.out.print("Create a file name: ");
+                userFileName = sc.next();
+            } else if (userAnswer.contains("no")) {
+                System.out.println("-------------------------------------");
+            }
             checkPath = "C:\\Users\\"+userName+"\\OneDrive\\Документы\\cardsLibrary";
             if(!Files.exists(Path.of(checkPath))){
                 System.out.println("Folder doesn't exist");
@@ -46,10 +53,9 @@ public class Main {
                 System.out.print("Choose a file by number: ");
                 int userChoice = sc.nextInt();
                 chosenFile = dirContent[userChoice-1];
-                //create a second for loop
             }
         } else if (os.contains("nix") || os.contains("nux") || os.contains("aix") || os.contains("untu")) {
-            path = "~\\Documents\\" + userName + "cardsLibrary\\input.txt";
+            path = "~\\Documents\\" + userName + "cardsLibrary\\"+chosenFile;
             mkdirPath = path.replace("\\input.txt", "");
             File f = new File(path);
             File mkdir = new File(mkdirPath);
@@ -90,8 +96,9 @@ public class Main {
                 }
                 Gameplay.wordsPlay(originalWords, translatedWords, path);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            System.out.println("-------------------------------------");
+            System.out.println("Please,restart the application");
         }
     }
 }
