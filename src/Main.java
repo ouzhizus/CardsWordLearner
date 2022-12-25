@@ -1,20 +1,39 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         String os = System.getProperty("os.name").toLowerCase();
         String userName = System.getProperty("user.name");
         String path = "";
-        String mkdirPath;
+        String mkdirPath = "";
+        String userFileName = "";
+        String checkPath = "";
         if(os.contains("windows")) {
-            path = "C:\\Users\\" + userName + "\\OneDrive\\Документы\\cardsLibrary\\input.txt";
-            mkdirPath = path.replace("\\input.txt", "");
+            checkPath = "C:\\Users\\" + userName + "\\OneDrive\\Documents\\cardsLibrary";
+            if(!Files.exists(Path.of(checkPath))){
+                System.out.println("Folder doesn't exist");
+            }
+            path = "C:\\Users\\" + userName + "\\OneDrive\\Documents\\cardsLibrary\\inpu.txt";
+            mkdirPath = path.replace("\\inpu.txt", "");
             File f = new File(path);
             File mkdir = new File(mkdirPath);
             if (mkdir.mkdirs()) {
                 System.out.println("Folder 'cardsLibrary' was created");
                 if (f.createNewFile()) {
                     System.out.println("File 'input.txt' was created at " + path);
+                }
+            }
+            else if (f.createNewFile()) {
+                System.out.println("File 'inpu.txt' was created at " + path);
+            }
+            else{
+                File directoryPath = new File(mkdirPath);
+                String[] dirContent = directoryPath.list();
+                for(String file : dirContent){
+                    System.out.print(file + " ");
                 }
             }
         } else if (os.contains("nix") || os.contains("nux") || os.contains("aix") || os.contains("untu")) {
