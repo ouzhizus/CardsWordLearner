@@ -80,6 +80,7 @@ public class Main {
                 AddWords.addNewWords(path);
                 System.out.println("-------------------------------------");
                 System.out.println("Please,restart the application");
+                sc.Next();
             }
             reader.close();
             BufferedReader reader2 = new BufferedReader
@@ -99,6 +100,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("-------------------------------------");
             System.out.println("Please,restart the application");
+            sc.Next();
         }
     }
 }
