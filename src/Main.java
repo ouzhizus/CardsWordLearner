@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Scanner sc = new Scanner(System.in,"Cp866");
         String os = System.getProperty("os.name").toLowerCase();
         String userName = System.getProperty("user.name");
@@ -80,7 +80,7 @@ public class Main {
                 AddWords.addNewWords(path);
                 System.out.println("-------------------------------------");
                 System.out.println("Please,restart the application \t (click)");
-                sc.next();
+                Thread.sleep(2000);
             }
             reader.close();
             BufferedReader reader2 = new BufferedReader
@@ -100,7 +100,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("-------------------------------------");
             System.out.println("Please,restart the application \t (click)");
-            sc.next();
+            Thread.sleep(2000);
         }
     }
 }
