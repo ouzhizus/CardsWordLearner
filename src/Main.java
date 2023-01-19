@@ -1,106 +1,85 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Scanner sc = new Scanner(System.in,"Cp866");
+    public static void main(String[] args) throws InterruptedException {
         String os = System.getProperty("os.name").toLowerCase();
         String userName = System.getProperty("user.name");
-        String PrePath = "";
-        String path = "";
-        String mkdirPath = "";
-        String userFileName = "";
-        String checkPath = "";
-        String chosenFile = "";
-        if(os.contains("windows")) {
-            System.out.print("Do you want to create a new file? YES/NO \n --> ");
-            String userAnswer = sc.next().toLowerCase();
-            if(userAnswer.contains("yes")){
-                System.out.print("Create a file name: ");
-                userFileName = sc.next();
-            } else if (userAnswer.contains("no")) {
-                System.out.println("-------------------------------------");
-            }
-            checkPath = "C:\\Users\\"+userName+"\\OneDrive\\Документы\\cardsLibrary";
-            if(!Files.exists(Path.of(checkPath))){
-                System.out.println("Folder doesn't exist");
-            }
-            PrePath = "C:\\Users\\"+userName+"\\OneDrive\\Документы\\cardsLibrary\\"+userFileName+".txt";
-            mkdirPath = "C:\\Users\\"+userName +"\\OneDrive\\Документы\\cardsLibrary";
-            File f = new File(PrePath);
-            File mkdir = new File(mkdirPath);
-            if (mkdir.mkdirs()) {
-                System.out.println("Folder 'cardsLibrary' was created");
-                if (f.createNewFile()) {
-                    System.out.println("File "+userFileName+" was created at " + PrePath);
+        String pathToFolder = "";
+        if(os.contains("linux")){
+            pathToFolder = "/home/"+userName+"/Documents/cardsLibrary";
+        } else if (os.contains("windows")) {
+            pathToFolder = "C:\\Users\\"+userName+"\\Documents\\";
+        } else{
+            System.out.println("Your system is not supported yet");
+            Thread.sleep(1000);
+        }
+        File file = new File(pathToFolder);
+        if(file.mkdir()){
+            System.out.println("Folder was created at "+pathToFolder);
+            System.out.println("Please,go to the folder and create a new txt file");
+            System.out.println("Words should be written in format 'Word' - 'Word'");
+        }else {
+            try{
+                File[] amountOfFiles = file.listFiles();
+                if(amountOfFiles.length == 0){
+                    System.out.println("File is empty");
+                }
+                else{
+                    String[] fileLinksName = new String[amountOfFiles.length];
+                    for(int i = 0; i < Objects.requireNonNull(amountOfFiles).length; i++){
+                        String innerFile = amountOfFiles[i].getName();
+                        if(innerFile.contains(".txt")){
+                            fileLinksName[i] = amountOfFiles[i].getName();
+                            System.out.println((i+1)+") "+ amountOfFiles[i].getName());
+                        }
+                    }
+                    System.out.println("-------------------------------------");
+                    System.out.print("Choose a file: ");
+                    Scanner sc = new Scanner(System.in);
+                    int userFileChoice = Integer.parseInt(sc.nextLine());
+                    while(userFileChoice > amountOfFiles.length || userFileChoice < 1){
+                        System.out.print("Please,input a valid number: ");
+                        userFileChoice = Integer.parseInt(sc.nextLine());
+                    }
+                    try{
+                        int counter = 0;
+                        String path = pathToFolder + "/" + fileLinksName[userFileChoice-1];
+                        BufferedReader reader = new BufferedReader(new FileReader(path));
+                        while(reader.readLine() != null){
+                            counter++;
+                        }
+                        String[] origWords = new String[counter];
+                        String[] transWords = new String[counter];
+                        counter = 0;
+                        Scanner scanner = new Scanner(new File(path));
+                        while(scanner.hasNextLine()){
+                            String[] eachLine = scanner.nextLine().split(" - ");
+                            origWords[counter] = eachLine[0];
+                            transWords[counter] = eachLine[1];
+                            counter++;
+                        }
+                        ClearConsole();
+                        Gameplay.wordsPlay(origWords,transWords);
+                    }catch (Exception e){
+                        System.err.println("Error occurred");
+                    }
                 }
             }
-            else if (f.createNewFile()) {
-                System.out.println("File '"+userFileName+"' was created at " + PrePath);
-            }
-            else{
-                File directoryPath = new File(mkdirPath);
-                String[] dirContent = directoryPath.list();
-                int amountOfFiles = 0;
-                for(String file : dirContent){
-                    amountOfFiles++;
-                    System.out.printf("%s) %s \n",amountOfFiles,file);
-                }
-                System.out.println("-------------------------------------");
-                System.out.print("Choose a file by number: ");
-                int userChoice = sc.nextInt();
-                chosenFile = dirContent[userChoice-1];
-            }
-        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix") || os.contains("untu")) {
-            path = "~\\Documents\\" + userName + "cardsLibrary\\"+chosenFile;
-            mkdirPath = path.replace("\\input.txt", "");
-            File f = new File(path);
-            File mkdir = new File(mkdirPath);
-            if (mkdir.mkdirs()) {
-                System.out.println("Folder 'cardsLibrary' was created");
-                if (f.createNewFile()) {
-                    System.out.println("File 'input.txt' was created at " + path);
-                }
+            catch (Exception e){
+                System.err.println("Error occurred");
             }
         }
-        path = "C:\\Users\\"+userName+"\\OneDrive\\Документы\\cardsLibrary\\"+chosenFile;
-        int arrayLength = 0;
-        String line;
-        try {
-            BufferedReader reader = new BufferedReader
-                    (new FileReader(path));
-            while ((reader.readLine()) != null) {
-                arrayLength++;
-            }
-            if (arrayLength == 0) {
-                System.out.println("File is empty");
-                AddWords.addNewWords(path);
-                System.out.println("-------------------------------------");
-                System.out.println("Please,restart the application");
-                Thread.sleep(2000);
-            }
-            reader.close();
-            BufferedReader reader2 = new BufferedReader
-                    (new FileReader(path));
-            String[] originalWords = new String[arrayLength];
-            String[] translatedWords = new String[arrayLength];
-            int i = 0;
-            if(arrayLength != 0){
-                while ((line = reader2.readLine()) != null) {
-                    String[] words = line.split(" ");
-                    originalWords[i] = words[0]; //adds a first word of line
-                    translatedWords[i] = words[1]; //adds a second word of line
-                    i++;
-                }
-                Gameplay.wordsPlay(originalWords, translatedWords, path);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("-------------------------------------");
-            System.out.println("Please,restart the application");
-            Thread.sleep(2000);
+    }
+    public static void ClearConsole() throws IOException{
+        String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("linux")){
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
+        if(os.contains("windows")){
+            Runtime.getRuntime().exec("cls");
         }
     }
 }
