@@ -52,22 +52,27 @@ public class Main {
                         System.out.print("Please,input a valid number: ");
                         userFileChoice = Integer.parseInt(sc.nextLine());
                     }
-                    try{
-                        String path = pathToFolder + "/" + fileLinksName[userFileChoice-1];
-                        List<String>origWords = new ArrayList<>();
-                        List<String>transWords = new ArrayList<>();
-                        Scanner scanner = new Scanner(new File(path));
-                        while(scanner.hasNextLine()){
-                            String[] eachLine = scanner.nextLine().split(" - ");
-                            if(eachLine.length >= 2){
-                                origWords.add(eachLine[0]);
-                                transWords.add(eachLine[1]);
-                            }
-                        }
+                    String path = pathToFolder + "/" + fileLinksName[userFileChoice-1];
+                    File checker = new File(path);
+                    if(checker.isDirectory()){
                         ClearConsole();
-                        Gameplay.wordsPlay(origWords,transWords);
-                    }catch (Exception e){
-                        e.printStackTrace();
+                        System.out.println("You've chosen a folder");
+                        System.out.println("-------------------------------------");
+                        File[] amountOfInnerFiles = checker.listFiles();
+                        if(Objects.requireNonNull(amountOfInnerFiles).length == 0){
+                            System.out.println("Folder is empty");
+                        }
+                        else{
+                            //read files and give it as output
+
+                        }
+                    }
+                    else{
+                        try{
+                            parseFile(path);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -85,5 +90,19 @@ public class Main {
         if(os.contains("windows")){
             Runtime.getRuntime().exec("cls");
         }
+    }
+    public static void parseFile(String path) throws IOException {
+        List<String>origWords = new ArrayList<>();
+        List<String>transWords = new ArrayList<>();
+        Scanner scanner = new Scanner(new File(path));
+        while(scanner.hasNextLine()){
+            String[] eachLine = scanner.nextLine().split(" - ");
+            if(eachLine.length >= 2){
+                origWords.add(eachLine[0]);
+                transWords.add(eachLine[1]);
+            }
+        }
+        ClearConsole();
+        Gameplay.wordsPlay(origWords,transWords);
     }
 }
