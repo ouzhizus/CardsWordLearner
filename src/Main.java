@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -23,16 +25,23 @@ public class Main {
         }else {
             try{
                 File[] amountOfFiles = file.listFiles();
-                if(amountOfFiles.length == 0){
+                if(Objects.requireNonNull(amountOfFiles).length == 0){
                     System.out.println("File is empty");
                 }
                 else{
                     String[] fileLinksName = new String[amountOfFiles.length];
-                    for(int i = 0; i < Objects.requireNonNull(amountOfFiles).length; i++){
+                    for(int i = 0; i < Objects.requireNonNull(amountOfFiles).length;) {
                         String innerFile = amountOfFiles[i].getName();
-                        if(innerFile.contains(".txt")){
+                        File f = amountOfFiles[i];
+                        if (f.isDirectory()) {
+                            fileLinksName[i] = f.getName();
+                            System.out.println((i+1) + ") "+ f.getName() + " (folder)");
+                            i++;
+                        }
+                        else if (innerFile.contains(".txt")) {
                             fileLinksName[i] = amountOfFiles[i].getName();
-                            System.out.println((i+1)+") "+ amountOfFiles[i].getName());
+                            System.out.println((i + 1) + ") " + amountOfFiles[i].getName());
+                            i++;
                         }
                     }
                     System.out.println("-------------------------------------");
@@ -44,26 +53,21 @@ public class Main {
                         userFileChoice = Integer.parseInt(sc.nextLine());
                     }
                     try{
-                        int counter = 0;
                         String path = pathToFolder + "/" + fileLinksName[userFileChoice-1];
-                        BufferedReader reader = new BufferedReader(new FileReader(path));
-                        while(reader.readLine() != null){
-                            counter++;
-                        }
-                        String[] origWords = new String[counter];
-                        String[] transWords = new String[counter];
-                        counter = 0;
+                        List<String>origWords = new ArrayList<>();
+                        List<String>transWords = new ArrayList<>();
                         Scanner scanner = new Scanner(new File(path));
                         while(scanner.hasNextLine()){
                             String[] eachLine = scanner.nextLine().split(" - ");
-                            origWords[counter] = eachLine[0];
-                            transWords[counter] = eachLine[1];
-                            counter++;
+                            if(eachLine.length >= 2){
+                                origWords.add(eachLine[0]);
+                                transWords.add(eachLine[1]);
+                            }
                         }
                         ClearConsole();
                         Gameplay.wordsPlay(origWords,transWords);
                     }catch (Exception e){
-                        System.err.println("Error occurred");
+                        e.printStackTrace();
                     }
                 }
             }
