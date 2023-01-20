@@ -63,8 +63,8 @@ public class Main {
                             System.out.println("Folder is empty");
                         }
                         else{
+                            System.out.println("Folders are not supported yet");
                             //read files and give it as output
-
                         }
                     }
                     else{
